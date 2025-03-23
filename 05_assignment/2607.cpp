@@ -5,23 +5,23 @@
 using namespace std;
 
 void parseInt(string word, vector<int> &arr) {
-	for (int j = 0; j < word.length(); j++) {
+	for (size_t j = 0; j < word.length(); j++) {
 		int num = word[j] - 'A';
 		arr[num]++;
 	}
 }
 
-bool isSimilar(vector<int>& arr, vector<int>& temp) {
-	int cnt = 0, diffAlpha = 0;
+bool isSimilar(vector<int>& arr, vector<int>& temp, int len1, int len2) {
+	int cnt = 0;
+	int diffAlpha = abs(len1 - len2);
 
 	for (int i = 0; i < 26; i++) {
 		if (arr[i] != temp[i]) {
 			cnt += abs(arr[i] - temp[i]);
-			diffAlpha++;
 		}
 	}
 
-	return (cnt == 0 || cnt == 1 || (cnt == 2 && diffAlpha == 2));
+	return (cnt == 0 || cnt == 1 || (cnt == 2 && diffAlpha == 0));
 }
 
 int main() {
@@ -45,7 +45,7 @@ int main() {
 
 		parseInt(wordword, temp);
 
-		if (isSimilar(arr, temp)) {
+		if (isSimilar(arr, temp, word.length(), wordword.length())) {
 			num++;
 		}
 	}
